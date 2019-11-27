@@ -1,11 +1,14 @@
 <template>
   <v-app>
     <v-toolbar app>
-      <v-toolbar-side-icon @click="toggleSideMenu"></v-toolbar-side-icon>
+      <v-toolbar-side-icon v-show="$store.state.login_user" @click="toggleSideMenu"></v-toolbar-side-icon>
       <v-toolbar-title class="headline text-uppercase">
         <span>マイアドレス帳</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-toolbar-items v-if="$store.state.login_user">
+        <v-btn @click="logout">ログアウト</v-btn>
+      </v-toolbar-items>
     </v-toolbar>
     <SideNav/>
 
@@ -27,7 +30,15 @@ export default {
   created () {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        //firebaseからユーザが渡された（＝ログイン成功した）のでユーザ情報をstoreに格納
         this.setLoginUser(user)
+        //ログイン後、現在のページがhomeだった時に連絡先一覧のページへ移動する
+        if(this.$router.currentRoute.name === 'home') this.$router.push({ name: 'addresses'})
+      } else {
+        //nullが来たときはログアウト時なのでstoreのユーザ情報削除
+        this.deleteLoginUser()
+        //ログアウトしたらhomeへ移動
+        this.$router.push({ name: 'home' })
       }
     })
   },
@@ -35,7 +46,7 @@ export default {
     //
   }),
   methods: {
-    ...mapActions(['toggleSideMenu', 'setLoginUser'], )
+    ...mapActions(['toggleSideMenu', 'setLoginUser', 'logout', 'deleteLoginUser'], )
   }
 };
 </script>
