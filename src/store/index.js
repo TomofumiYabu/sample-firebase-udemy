@@ -29,6 +29,13 @@ export default new Vuex.Store({
     setLoginUser({ commit }, user) {
       commit('setLoginUser', user)
     },
+    fetchAddresses ({ getters, commit }) {
+      // firestoreからデータを取得する。取得時のデータ形式に注意
+      firebase.firestore().collection(`users/${getters.uid}/addresses`).get().then(snapshot => {
+        console.log(snapshot)
+        snapshot.forEach(doc => commit('addAddress', doc.data()))
+      })
+    },
     deleteLoginUser({ commit }) {
       commit('deleteLoginUser')
     },
@@ -45,8 +52,8 @@ export default new Vuex.Store({
     toggleSideMenu ({commit}) {
       commit('toggleSideMenu')
     },
-    addAddress ({commit}, address) {
-      if (this.getters.uid) firebase.firestore().collection('users/${getters.uid}/addresses').add(address)
+    addAddress ({getters, commit}, address) {
+      if (this.getters.uid) firebase.firestore().collection(`users/${getters.uid}/addresses`).add(address)
       commit('addAddress', address)
     }
   },
