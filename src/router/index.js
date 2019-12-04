@@ -16,7 +16,7 @@ const routes = [
     path: '/addresses',
     name: 'addresses',
     component: Addresses
-  },  
+  },
   {
     path: '/addresses/:address_id?/edit',
     name: 'addresses_edit',
@@ -29,6 +29,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/image',
+    name: 'image',
+    component: () => import(/* webpackChunkName: "image" */ '../views/Image.vue')
   }
 ]
 
