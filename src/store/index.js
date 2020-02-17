@@ -21,7 +21,9 @@ export default new Vuex.Store({
     toggleSideMenu(state) {
       state.drawer = !state.drawer
     },
-    addAddress (state, address) {
+    addAddress (state, { id, address }) {
+      //引数として受け取ったidをaddressオブジェクトの中に入れてfirestoreに保存する
+      address.id = id
       state.addresses.push(address)
     }
   },
@@ -33,7 +35,7 @@ export default new Vuex.Store({
       // firestoreからデータを取得する。取得時のデータ形式に注意
       firebase.firestore().collection(`users/${getters.uid}/addresses`).get().then(snapshot => {
         console.log(snapshot)
-        snapshot.forEach(doc => commit('addAddress', doc.data()))
+        snapshot.forEach(doc => commit('addAddress', {id: doc.id, address: doc.data() }))
       })
     },
     deleteLoginUser({ commit }) {
@@ -53,8 +55,11 @@ export default new Vuex.Store({
       commit('toggleSideMenu')
     },
     addAddress ({getters, commit}, address) {
-      if (this.getters.uid) firebase.firestore().collection(`users/${getters.uid}/addresses`).add(address)
-      commit('addAddress', address)
+      if (this.getters.uid) {
+        firebase.firestore().collection(`users/${getters.uid}/addresses`).add(address).then(doc => {
+          commit('addAddress', {id: doc.id, address})
+        })
+      }
     }
   },
   getters: {
