@@ -43,10 +43,14 @@ export default {
   },
   methods: {
       submit() {
+        if( this.$route.params.address_id ) {
+          this.updateAddress({ id: this.$route.params.address_id, address: this.address})
+        } else {
           this.addAddress(this.address)
+        }
           this.$router.push({ name:'addresses'})
       },
-      ...mapActions(['addAddress'])
+      ...mapActions(['addAddress', 'updateAddress'])
   }
 }
 </script>
