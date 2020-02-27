@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Addresses from '../views/Addresses.vue'
 import AddressForm from '../views/AddressForm.vue'
+import Entries from '../views/Entries.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/addresses/:address_id?/edit',
     name: 'addresses_edit',
     component: AddressForm
+  },
+  {
+    path: '/entries',
+    name: 'entries',
+    component: Entries
   },
   {
     path: '/about',

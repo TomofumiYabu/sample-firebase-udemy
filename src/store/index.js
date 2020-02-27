@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     login_user: null,
     drawer: false,
-    addresses: []
+    addresses: [],
+    entries: []
   },
   mutations: {
     setLoginUser (state, user) {
@@ -33,18 +34,15 @@ export default new Vuex.Store({
     deleteAddress (state, { id }) {
       const index = state.addresses.findIndex(address => address.id === id)
       state.addresses.splice(index, 1)
+    },
+    addEntries (state, {id, entry}){
+      entry.id = id
+      state.entries.push(entry)
     }
   },
   actions: {
     setLoginUser({ commit }, user) {
       commit('setLoginUser', user)
-    },
-    fetchAddresses ({ getters, commit }) {
-      // firestoreからデータを取得する。取得時のデータ形式に注意
-      firebase.firestore().collection(`users/${getters.uid}/addresses`).get().then(snapshot => {
-        console.log(snapshot)
-        snapshot.forEach(doc => commit('addAddress', {id: doc.id, address: doc.data() }))
-      })
     },
     deleteLoginUser({ commit }) {
       commit('deleteLoginUser')
@@ -61,6 +59,12 @@ export default new Vuex.Store({
     },
     toggleSideMenu ({commit}) {
       commit('toggleSideMenu')
+    },
+    fetchAddresses ({ getters, commit }) {
+      // firestoreからデータを取得する。取得時のデータ形式に注意
+      firebase.firestore().collection(`users/${getters.uid}/addresses`).get().then(snapshot => {
+        snapshot.forEach(doc => commit('addAddress', {id: doc.id, address: doc.data() }))
+      })
     },
     addAddress ({getters, commit}, address) {
       if (this.getters.uid) {
@@ -82,14 +86,29 @@ export default new Vuex.Store({
           commit('deleteAddress', {id})
         })
       }
-    }
+    },
+    fetchEntries ({ getters, commit }) {
+      // firestoreからデータを取得する。取得時のデータ形式に注意
+      firebase.firestore().collection(`users/${getters.uid}/entries`).get().then(snapshot => {
+        console.log(snapshot)
+        snapshot.forEach(doc => commit('addEntries', {id: doc.id, entries: doc.data() }))
+      })
+    },
+    addEntries ({getters, commit}, entries) {
+      if (this.getters.uid) {
+        firebase.firestore().collection(`users/${getters.uid}/entries`).add(entries).then(doc => {
+          commit('addEntries', {id: doc.id, entries})
+        })
+      }
+    },
   },
   getters: {
     userName: state => state.login_user ? state.login_user.displayName : '' ,
     photoURL: state => state.login_user ? state.login_user.photoURL : '',
     uid: state => state.login_user ? state.login_user.uid : null,
     //関数を返すgetter(idを引数にとる)
-    getAddressById: state => id => state.addresses.find(address => address.id === id)
+    getAddressById: state => id => state.addresses.find(address => address.id === id),
+    getEntryById: state => id => state.entries.find(entry => entry.id === id)
   },
   modules: {
   }
