@@ -33,8 +33,9 @@ export default {
         //firebaseからユーザが渡された（＝ログイン成功した）のでユーザ情報をstoreに格納
         this.setLoginUser(user)
         this.fetchAddresses()
-        //ログイン後、現在のページがhomeだった時に連絡先一覧のページへ移動する
-        if(this.$router.currentRoute.name === 'home') this.$router.push({ name: 'addresses'})
+        this.fetchEntries()
+        //ログイン後、現在のページがhomeだった時にエントリー一覧のページへ移動する
+        if(this.$router.currentRoute.name === 'home') this.$router.push({ name: 'entries'})
       } else {
         //nullが来たときはログアウト時なのでstoreのユーザ情報削除
         this.deleteLoginUser()
@@ -47,7 +48,7 @@ export default {
     //
   }),
   methods: {
-    ...mapActions(['toggleSideMenu', 'setLoginUser', 'logout', 'deleteLoginUser', 'fetchAddresses'], )
+    ...mapActions(['toggleSideMenu', 'setLoginUser', 'logout', 'deleteLoginUser', 'fetchAddresses', 'fetchEntries'], )
   }
 };
 </script>

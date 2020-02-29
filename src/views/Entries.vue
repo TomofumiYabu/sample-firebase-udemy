@@ -6,8 +6,8 @@
       </v-flex>
 
       <v-flex xs12 mt-5 text-xs-right>
-        <router-link :to="{name: 'addresses_edit'}">
-          <v-btn color="info">エントリー記録新規作成</v-btn>
+        <router-link :to="{name: 'entries_edit'}">
+          <v-btn color="info">エントリー新規作成</v-btn>
         </router-link>
       </v-flex>
 
@@ -19,10 +19,9 @@
             <td class="text-xs-left">{{ props.item.pair }}</td>
             <td class="text-xs-left">{{ props.item.result }}</td>
             <td class="text-xs-left">{{ props.item.pips }}</td>
-            <!--
             <td class="text-xs-left">
               <span>
-                <router-link :to="{ name: 'addresses_edit', params: {address_id: props.item.id}}">
+                <router-link :to="{ name: 'entries_edit', params: {entry_id: props.item.id}}">
                   <v-icon small class="mr-2">edit</v-icon>
                 </router-link>
               </span>
@@ -30,7 +29,6 @@
                 <v-icon small class="mr-2" @click="deleteConfirm(props.item.id)">delete</v-icon>
               </span>
             </td>
-            -->
           </template>
         </v-data-table>
       </v-flex>
@@ -39,9 +37,12 @@
 </template>
 
 <script>
-//import { mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
+  created () {
+    this.entries = this.$store.state.entries
+  },
   data () {
     return {
       headers: [
@@ -54,7 +55,22 @@ export default {
       entries: []
       //entries: [{datetime: '20200224123110', pair: 'ドル円', result: '勝', pips: '5.0'}]
     }
+  },
+    methods: {
+    deleteConfirm (id) {
+      if( confirm('削除してよろしいですか？')) {
+        this.deleteEntry({id})
+      }
+    },
+    ...mapActions(['deleteEntry'])
   }
 }
 
 </script>
+
+
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>

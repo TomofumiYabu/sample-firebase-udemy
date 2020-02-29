@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Addresses from '../views/Addresses.vue'
 import AddressForm from '../views/AddressForm.vue'
 import Entries from '../views/Entries.vue'
+import EntryForm from '../views/EntryForm.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/entries',
     name: 'entries',
     component: Entries
+  },
+  {
+    path: '/entries/:entry_id?/edit',
+    name: 'entries_edit',
+    component: EntryForm
   },
   {
     path: '/about',
