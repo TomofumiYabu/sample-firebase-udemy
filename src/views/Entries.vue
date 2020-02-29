@@ -7,7 +7,7 @@
 
       <v-flex xs12 mt-5 text-xs-right>
         <router-link :to="{name: 'addresses_edit'}">
-          <v-btn color="info">連絡先追加</v-btn>
+          <v-btn color="info">エントリー記録新規作成</v-btn>
         </router-link>
       </v-flex>
 
