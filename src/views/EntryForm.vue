@@ -10,10 +10,12 @@
           <v-card-text>
             <v-form>
               <v-text-field v-model="entry.datetime" label="日時"></v-text-field>
-              <v-text-field
+              <v-select
                 v-model="entry.pair"
                 label="通貨ペア"
-              ></v-text-field>
+                dence
+                :items="pairList"
+              ></v-select>
               <v-text-field
                 v-model="entry.result"
                 label="結果"
@@ -48,7 +50,8 @@ export default {
   },
   data() {
     return {
-      entry: {}
+      entry: {},
+      pairList: ['ドル円', 'ユーロドル', 'ポンドドル', 'ユーロ円']
     };
   },
   methods: {
