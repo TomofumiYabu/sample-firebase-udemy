@@ -9,17 +9,100 @@
         <v-card>
           <v-card-text>
             <v-form>
-              <v-text-field v-model="entry.datetime" label="日時"></v-text-field>
+      <!-- DatePickerここから -->
+      <v-menu
+        v-model="showDatePicker"
+        :close-on-content-click="false"
+        :nudge-right="40"
+        transition="scale-transition"
+        offset-y
+        min-width="290px"
+      >
+        <template v-slot:activator="{ on }">
+          <v-text-field
+            v-model="entry.date"
+            label="エントリー日"
+            prepend-icon="event"
+            readonly
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker v-model="entry.date" @input="showDatePicker = false"></v-date-picker>
+      </v-menu>
+      <!-- DatePickerここまで -->
+      <!-- TimePickerここから -->
+      <v-menu
+        ref="menu"
+        v-model="showTimePicker"
+        :close-on-content-click="false"
+        :nudge-right="40"
+        :return-value.sync="entry.time"
+        transition="scale-transition"
+        offset-y
+        max-width="290px"
+        min-width="290px"
+      >
+        <template v-slot:activator="{ on }">
+          <v-text-field
+            v-model="entry.time"
+            label="エントリー時刻"
+            prepend-icon="access_time"
+            readonly
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-time-picker
+          v-if="showTimePicker"
+          v-model="entry.time"
+          full-width
+          format="24hr"
+          @click:minute="$refs.menu.save(entry.time)"
+        ></v-time-picker>
+      </v-menu>
+      <!-- TimePickerここまで -->
+      <!-- TimePicker2ここから -->
+      <v-menu
+        ref="menu"
+        v-model="showTimePicker2"
+        :close-on-content-click="false"
+        :nudge-right="40"
+        :return-value.sync="entry.exittime"
+        transition="scale-transition"
+        offset-y
+        max-width="290px"
+        min-width="290px"
+      >
+        <template v-slot:activator="{ on }">
+          <v-text-field
+            v-model="entry.exittime"
+            label="決済時刻"
+            prepend-icon="access_time"
+            readonly
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-time-picker
+          v-if="showTimePicker2"
+          v-model="entry.exittime"
+          full-width
+          format="24hr"
+          @click:minute="$refs.menu.save(entry.exittime)"
+        ></v-time-picker>
+      </v-menu>
+      <!-- TimePicker2ここまで -->
+
               <v-select
                 v-model="entry.pair"
                 label="通貨ペア"
                 dence
                 :items="pairList"
               ></v-select>
-              <v-text-field
+              <v-select
                 v-model="entry.result"
                 label="結果"
-              ></v-text-field>
+                dence
+                :item="resultList"
+              ></v-select>
               <v-text-field
                 v-model="entry.pips"
                 label="PIPS"
@@ -44,6 +127,7 @@ export default {
     const entry = this.$store.getters.getEntryById(this.$route.params.entry_id)
     if(entry) {
       this.entry = entry
+      console.log(this.entry)
     } else {
       this.$router.push({name: 'entries' })
     }
@@ -51,7 +135,11 @@ export default {
   data() {
     return {
       entry: {},
-      pairList: ['ドル円', 'ユーロドル', 'ポンドドル', 'ユーロ円']
+      showDatePicker: false,
+      showTimePicker: false,
+      showTimePicker2: false,
+      pairList: ['ドル円', 'ユーロドル', 'ポンドドル', 'ユーロ円'],
+      resultList: ['勝', '負']
     };
   },
   methods: {

@@ -15,7 +15,8 @@
       <v-flex xs12 mt-5 justify-center>
         <v-data-table :headers='headers' :items='entries'>
           <template v-slot:items="props">
-            <td class="text-xs-left">{{ props.item.datetime }}</td>
+            <td class="text-xs-left">{{ props.item.date }}</td>
+            <td class="text-xs-left">{{ props.item.time }}</td>
             <td class="text-xs-left">{{ props.item.pair }}</td>
             <td class="text-xs-left">{{ props.item.result }}</td>
             <td class="text-xs-left">{{ props.item.pips }}</td>
@@ -46,7 +47,8 @@ export default {
   data () {
     return {
       headers: [
-        { text: '日時', value: 'datetime' },
+        { text: 'エントリー日', value: 'date' },
+        { text: 'エントリー時刻', value: 'time'},
         { text: '通貨ペア', value: 'pair' },
         { text: '結果', value: 'result' },
         { text: 'PIPS', value: 'pips' },
