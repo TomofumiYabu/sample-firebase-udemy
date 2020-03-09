@@ -127,7 +127,6 @@ export default {
     const entry = this.$store.getters.getEntryById(this.$route.params.entry_id)
     if(entry) {
       this.entry = entry
-      console.log(this.entry)
     } else {
       this.$router.push({name: 'entries' })
     }
