@@ -5,7 +5,7 @@
         <h1>エントリー情報編集</h1>
       </v-flex>
 
-      <v-flex xs5 mt-5>
+      <v-flex xs-10 md-6 mt-5>
         <v-card>
           <v-card-text>
             <v-form>
