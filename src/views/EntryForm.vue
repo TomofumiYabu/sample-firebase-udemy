@@ -62,7 +62,7 @@
       <!-- TimePickerここまで -->
       <!-- TimePicker2ここから -->
       <v-menu
-        ref="menu"
+        ref="menu2"
         v-model="showTimePicker2"
         :close-on-content-click="false"
         :nudge-right="40"
@@ -86,7 +86,7 @@
           v-model="entry.exittime"
           full-width
           format="24hr"
-          @click:minute="$refs.menu.save(entry.exittime)"
+          @click:minute="$refs.menu2.save(entry.exittime)"
         ></v-time-picker>
       </v-menu>
       <!-- TimePicker2ここまで -->
