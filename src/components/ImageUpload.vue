@@ -5,9 +5,11 @@
         <p>画像アップロード</p>
         <!-- 画像のプレビュー表示領域 -->
         <v-img :src="upimage.fileUrl" :contain="true"></v-img>
+        <!-- ファイル情報部分
         <p>{{ upimage.fileName }}</p>
         <p>圧縮前サイズ(MB):{{ fileInfo.before.size }}</p>
         <p>圧縮後サイズ(MB):{{ fileInfo.after.size }}</p>
+        -->
       </v-flex>
       <v-flex xs12>
         <!-- ファイルの選択 -->
