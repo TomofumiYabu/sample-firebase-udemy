@@ -123,7 +123,6 @@ export default new Vuex.Store({
         .collection(`users/${getters.uid}/entries`)
         .get()
         .then(snapshot => {
-          console.log(snapshot);
           snapshot.forEach(doc =>
             commit("addEntry", { id: doc.id, entry: doc.data() })
           );

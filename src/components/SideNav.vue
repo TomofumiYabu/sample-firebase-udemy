@@ -26,7 +26,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-  
+
 </template>
 
 <script>
@@ -38,6 +38,7 @@ export default {
       items: [
         { title: '連絡先一覧', icon: 'list', link: {name:'addresses'} },
         { title: 'エントリー一覧', icon: 'list', link: {name:'entries'} },
+        { title: 'SandBox', icon:'list', link: {name: 'about'} }
       ]
     }
   },
