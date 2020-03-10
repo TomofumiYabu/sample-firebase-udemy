@@ -3,7 +3,7 @@
     <v-layout text-xs-center wrap>
       <v-flex xs12>
         <!-- 画像のプレビュー表示領域 -->
-        <v-img :src="upimage.fileUrl" aspect-ratio="2" :contain="true"></v-img>
+        <v-img :src="upimage.fileUrl" :contain="true"></v-img>
         <p>{{ upimage.fileName }}</p>
         <p>圧縮前サイズ(MB):{{ fileInfo.before.size }}</p>
         <p>圧縮後サイズ(MB):{{ fileInfo.after.size }}</p>
