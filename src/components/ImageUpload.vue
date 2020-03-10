@@ -2,6 +2,7 @@
   <v-container>
     <v-layout text-xs-center wrap>
       <v-flex xs12>
+        <p>画像アップロード</p>
         <!-- 画像のプレビュー表示領域 -->
         <v-img :src="upimage.fileUrl" :contain="true"></v-img>
         <p>{{ upimage.fileName }}</p>
@@ -14,7 +15,7 @@
       </v-flex>
       <v-flex xs12>
         <!-- Submitボタン -->
-        <v-btn color="primary" :disabled="isUploading">submit</v-btn>
+        <v-btn color="primary" :disabled="isUploading" @click="submit()">submit</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -22,6 +23,7 @@
 
 <script>
 import ImageUtil from "./lib/ImageUtil.js"
+import firebase from "firebase"
 
 export default {
   data() {
@@ -31,7 +33,8 @@ export default {
       fileInfo: {
         before: { size: 0 },
         after: { size: 0 }
-      }
+      },
+      imageUrl: null
     };
   },
   methods: {
@@ -60,8 +63,30 @@ async selectedFile(e) {
         this.isUploading = false;
       }
     },
-    async submit() {
-      // 画像をサーバに送信する処理
+    submit: function() {
+      //----------- 画像をサーバに送信する処理 -----------
+      this.isUploading = true;
+
+      if (!this.upimage.blob) {
+        return;
+      }
+      try{
+        // ストレージオブジェクト作成
+        var storageRef = firebase.storage().ref();
+        // ファイルのパスを設定
+        var mountainsRef = storageRef.child(`entry/images/${this.upimage.fileName}`);
+        // ファイルを適用してファイルアップロード開始
+        mountainsRef.put(this.upimage.blob).then(snapshot => {
+          snapshot.ref.getDownloadURL().then(downloadURL => {
+            this.imageUrl = downloadURL;
+            this.$emit('uploaded', this.imageUrl);
+            console.log(this.imageUrl);
+          });
+        });
+      } finally {
+        this.isUploading = false;
+      }
+
     }
   }
 };
