@@ -59,7 +59,7 @@ async selectedFile(e) {
         this.upimage.blob = compFile;
         this.upimage.fileUrl = await ImageUtil.getDataUrlFromFile(compFile);
         var date = new Date();
-        this.upimage.fileName = date.getFullYear() + date.getMonth + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds() + file.name;
+        this.upimage.fileName = date.getFullYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds() + file.name;
       } catch (err) {
         // エラーメッセージ等を表示
       } finally {

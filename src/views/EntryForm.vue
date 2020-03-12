@@ -132,6 +132,7 @@
                 :items="resultList"
               ></v-select>
               <v-text-field v-model="entry.pips" label="PIPS"></v-text-field>
+              <v-text-field v-model="entry.lot" label="LOT"></v-text-field>
 
               <v-divider />
               <v-subheader>根拠</v-subheader>
@@ -140,7 +141,7 @@
                 label="根拠項目"
                 dence
                 chips
-                muitiple
+                multiple
                 :items="itemList"
               ></v-select>
               <v-select
@@ -148,7 +149,7 @@
                 label="意識ライン"
                 dence
                 chips
-                muitiple
+                multiple
                 :items="lineList"
               ></v-select>
 
@@ -160,7 +161,7 @@
                 label="懸念項目"
                 dence
                 chips
-                muitiple
+                multiple
                 :items="itemList"
               ></v-select>
               <v-select
@@ -168,9 +169,21 @@
                 label="懸念意識ライン"
                 dence
                 chips
-                muitiple
+                multiple
                 :items="lineList"
               ></v-select>
+
+              <v-divider />
+              <v-textarea
+                outlined
+                label="コメント1"
+                :value="entry.comment1"
+              ></v-textarea>
+              <v-textarea
+                outlined
+                label="コメント2"
+                :value="entry.comment2"
+              ></v-textarea>
 
               <v-btn @click="$router.push({ name: 'entries' })"
                 >キャンセル</v-btn
@@ -199,6 +212,7 @@ export default {
       this.entry.result = "勝"
       this.entry.direction = "順"
       this.entry.pips = 0
+      this.entry.lot = 5
       return;
     }
     //取得できた時の読込処理
