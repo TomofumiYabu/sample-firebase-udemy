@@ -82,7 +82,6 @@ async selectedFile(e) {
           snapshot.ref.getDownloadURL().then(downloadURL => {
             this.imageUrl = downloadURL;
             this.$emit('uploaded', this.imageUrl);
-            console.log(this.imageUrl);
           });
         });
       } finally {
