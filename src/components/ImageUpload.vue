@@ -58,8 +58,9 @@ async selectedFile(e) {
         // 画像情報の設定
         this.upimage.blob = compFile;
         this.upimage.fileUrl = await ImageUtil.getDataUrlFromFile(compFile);
-        var date = new Date();
-        this.upimage.fileName = date.getFullYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds() + file.name;
+        //var date = new Date();
+        this.upimage.fileName = file.name; //date.getFullYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds() + 
+        
       } catch (err) {
         // エラーメッセージ等を表示
       } finally {
