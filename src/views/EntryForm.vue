@@ -177,12 +177,12 @@
               <v-textarea
                 outlined
                 label="コメント1"
-                :value="entry.comment1"
+                v-model="entry.comment1"
               ></v-textarea>
               <v-textarea
                 outlined
                 label="コメント2"
-                :value="entry.comment2"
+                v-model="entry.comment2"
               ></v-textarea>
 
               <v-btn @click="$router.push({ name: 'entries' })"
@@ -230,11 +230,11 @@ export default {
       showTimePicker: false,
       showTimePicker2: false,
       isAuto: false,
-      pairList: ["ドル円", "ユーロドル", "ポンドドル", "ユーロ円"],
+      pairList: ["ドル円", "ユーロドル", "ポンドドル", "ユーロ円", "ポンド円", "オージードル"],
       resultList: ["勝", "負", "引分"],
       buysellList: ["ロング", "ショート"],
       directList: ["順", "逆"],
-      methodList: ["POG1", "POG2","バンドウォーク","意識ラインブレイク", "バンド内ウォーク","ダブルトップ/ボトム-頂点逆張り", "ダブルトップ/ボトム-ネックライン抜け", "意識ライン逆張り"],
+      methodList: ["POG1", "POG2","バンドウォーク","意識ラインブレイク", "バンド内ウォーク","ダブルトップ/ボトム-頂点逆張り", "ダブルトップ/ボトム-ネックライン抜け", "意識ライン逆張り", "その他"],
       itemList:['5分足PO', '15分足PO', '1時間足PO', '4時間足PO', 'ヒゲ', 'ダイバージェンス', '底値切り上げ/下げ', '天井切り上げ/下げ', '乖離'],
       lineList:['直近高値/安値', '5分足MA', '5分足EMA','5分足ボリンジャー','15分足MA', '15分足EMA','15分足ボリンジャー','1時間足MA13', '1時間足EMA','1時間足ボリンジャー','4時間足MA13', '4時間足EMA','4時間足ボリンジャー']
     };
