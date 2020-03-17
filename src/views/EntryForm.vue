@@ -104,7 +104,7 @@
                 :items="pairList"
               ></v-select>
               <v-select
-                v-model="entry.direction"
+                v-model="entry.buysell"
                 label="売買"
                 dence
                 :items="buysellList"
@@ -184,6 +184,14 @@
                 label="コメント2"
                 v-model="entry.comment2"
               ></v-textarea>
+              <v-textarea
+                outlined
+                label="報告文書"
+                readonly
+                :value="reportText"
+              ></v-textarea>
+
+              <v-btn color="info" @click="witeToClipboard()">報告コピー</v-btn>
 
               <v-btn @click="$router.push({ name: 'entries' })"
                 >キャンセル</v-btn
@@ -202,7 +210,7 @@ import { mapActions } from "vuex";
 import ImageUpload from '@/components/ImageUpload'
 export default {
   components: {
-    ImageUpload
+    ImageUpload,
   },
   created() {
     //URLでエントリーIDを取得できない場合は新規作成
@@ -221,6 +229,21 @@ export default {
       this.entry = entry;
     } else {
       this.$router.push({ name: "entries" });
+    }
+  },
+  computed: {
+    dayFormat: function() {
+      var dateValue = new Date(this.entry.date)
+      var dayOfWeek = dateValue.getDay()
+      var dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][dayOfWeek] ;	// 曜日(日本語表記)
+      console.log(dayOfWeekStr)
+      return (dateValue.getMonth() + 1).toString() + "月" + dateValue.getDate().toString() + "日 " + dayOfWeekStr + "曜日"
+    },
+    reportText: function() {
+      var txt = "【エントリー報告】\n" + this.dayFormat + " " + this.entry.pair + "\n";
+      txt = txt + this.entry.time + " " + this.entry.buysell +  "\n" + this.entry.exittime + " 決済\n"
+      txt = txt + "結果：" + this.entry.pips + "pips" + "\n" + this.entry.comment1 + "\n\n" + "チューニングよろしくお願いします。"
+      return txt
     }
   },
   data() {
@@ -254,6 +277,11 @@ export default {
     uploadedImage(value) {
       this.entry.imageUrl = value;
       alert("ファイルをアップロードしました。")
+    },
+    witeToClipboard() {
+      const copyText = this.reportText
+      navigator.clipboard
+        .writeText(copyText)
     },
     ...mapActions(["addEntry", "updateEntry"])
   }
