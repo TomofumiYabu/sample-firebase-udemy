@@ -185,9 +185,9 @@
                 v-model="entry.comment2"
               ></v-textarea>
               <v-textarea
+                id="reportTextArea"
                 outlined
                 label="報告文書"
-                readonly
                 :value="reportText"
               ></v-textarea>
 
@@ -279,9 +279,23 @@ export default {
       alert("ファイルをアップロードしました。")
     },
     witeToClipboard() {
-      const copyText = this.reportText
-      navigator.clipboard
-        .writeText(copyText)
+      //const copyText = this.reportText
+      // コピー対象の要素を取得
+      var copytext = document.getElementById('reportTextArea');
+      try {
+            // ここから下が、iOS用でしか機能しない関数------
+            var range = document.createRange();
+            range.selectNode(copytext);
+            window.getSelection().addRange(range);
+            // ------------------------------------------
+            document.execCommand("copy");
+            alert("報告内容をコピーしました。");
+        } catch (e) {
+            alert("このブラウザでは対応していません。");
+        }
+
+      //navigator.clipboard
+      //  .writeText(copyText)
     },
     ...mapActions(["addEntry", "updateEntry"])
   }

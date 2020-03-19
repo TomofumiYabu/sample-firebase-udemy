@@ -13,10 +13,10 @@
 
 
       <v-flex xs12 mt-5 justify-center>
-        <v-data-table :headers='headers' :items='entries'>
+        <v-data-table :headers='headers' :items='entries' :loading="tableLoading" :sort-by="['date', 'time']" :sort-desc="[true, true]">
           <template v-slot:items="props">
-            <td class="text-xs-left">{{ props.item.date }}</td>
-            <td class="text-xs-left">{{ props.item.time }}</td>
+            <td class="text-xs-left">{{ props.item.date }} {{ props.item.time }}</td>
+            <!-- <td class="text-xs-left"></td> -->
             <td class="text-xs-left">{{ props.item.pair }}</td>
             <td class="text-xs-left">{{ props.item.result }}</td>
             <td class="text-xs-left">{{ props.item.pips }}</td>
@@ -43,17 +43,19 @@ import { mapActions } from 'vuex'
 export default {
   created () {
     this.entries = this.$store.state.entries
+    this.tableLoading = false
   },
   data () {
     return {
       headers: [
         { text: 'エントリー日', value: 'date' },
-        { text: 'エントリー時刻', value: 'time'},
+        //{ text: 'エントリー時刻', value: 'time'},
         { text: '通貨ペア', value: 'pair' },
         { text: '結果', value: 'result' },
         { text: 'PIPS', value: 'pips' },
         { text: '操作', sortable: false}
       ],
+      tableLoading: true,
       entries: []
       //entries: [{datetime: '20200224123110', pair: 'ドル円', result: '勝', pips: '5.0'}]
     }
